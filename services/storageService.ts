@@ -1,5 +1,4 @@
 
-
 import { Message, ApiKeyDef, GenerationSettings, Language } from '../types';
 
 const DB_NAME = 'EveVaultDB';
@@ -230,22 +229,21 @@ export const loadGradioEndpoint = (): string | null => {
 
 // --- GENERATION SETTINGS STORAGE ---
 
-// FIX: Added missing 'aiImageGeneration', 'localLlmUrl', and 'localModelName' properties to satisfy the GenerationSettings interface.
 export const GenerationSettingsDefaults: GenerationSettings = {
     guidance: 7.0,
     steps: 30,
     ipAdapterStrength: 0.6,
-    loraStrength: 0.45, // Not currently in UI, but kept for potential future use
+    loraStrength: 0.45, 
     seed: 42,
     randomizeSeed: true,
     useMagic: true,
-    aiImageGeneration: true, // NEW: Defaults to true
+    aiImageGeneration: true, 
     temperature: 1.0,
     topP: 0.95,
     topK: 40,
     repeatPenalty: 1.1,
-    localLlmUrl: 'http://localhost:11434/v1',
-    localModelName: 'llama3.1:8b-abliterated'
+    localLlmUrl: 'http://localhost:11434/api/chat',
+    localModelName: 'mannix/llama3.1-8b-abliterated:latest'
 };
 
 export const saveGenerationSettings = (settings: GenerationSettings) => {
@@ -261,7 +259,6 @@ export const loadGenerationSettings = (): GenerationSettings => {
         const raw = localStorage.getItem(GEN_SETTINGS_STORAGE_KEY);
         if (raw) {
             const parsed = JSON.parse(raw);
-            // Merge saved settings with defaults to ensure all keys are present
             return { ...GenerationSettingsDefaults, ...parsed };
         }
     } catch (e) {
